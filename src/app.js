@@ -3,6 +3,8 @@ import express from 'express'
 import chalk from 'chalk'
 import config from './config/master'
 
+import './db/mongose'
+
 const port = config.server.port
 const app = express()
 

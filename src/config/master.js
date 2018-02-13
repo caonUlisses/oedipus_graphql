@@ -6,6 +6,10 @@ export default {
     files: {
       path: process.env.FILE_PATH || './../../files'
     },
-    port: process.env.PORT || 3000
+    port: process.env.PORT || 3000,
+    db: {
+      uri: process.env.DB_URI || 'mongodb://localhost:27017',
+      default_collection: process.env.DEFAULT_COLLECTION || 'oedipus'
+    }
   }
 }
