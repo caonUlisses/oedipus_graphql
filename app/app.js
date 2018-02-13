@@ -14,6 +14,8 @@ var _master = require('./config/master');
 
 var _master2 = _interopRequireDefault(_master);
 
+require('./db/mongose');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var port = _master2.default.server.port;
