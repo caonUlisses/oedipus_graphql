@@ -37,7 +37,7 @@ const UserSchema = new mongoose.Schema({
   access: {
     type: String,
     required: true,
-    default: config.app.users.default_access
+    default: config.models.users.access
   },
   verified: {
     type: Boolean,

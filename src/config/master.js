@@ -15,5 +15,10 @@ export default {
       uri: process.env.DB_URI || 'mongodb://localhost:27017',
       default_collection: process.env.DEFAULT_COLLECTION || 'oedipus'
     }
+  },
+  models: {
+    users: {
+      access: process.env.USER_DEFAULT_ACCESS || 'user'
+    }
   }
 }
