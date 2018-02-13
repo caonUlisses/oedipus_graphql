@@ -73,14 +73,13 @@ UserSchema.methods.toJSON = function () {
   return pick(userObject, ['_id', 'name', 'email', 'picture', 'access'])
 }
 
-UserSchema.methods.generateAuthToken = async function (issuer = 'force') {
+UserSchema.methods.setAuthToken = async function (user = this, issuer = 'force') {
   try {
-    const user = this
     const { name, access } = user
     const expiration = Date.now() + 2000000000
     const token = await jwt.sign({ _id: user._id.toHexString(), access, expiration, name, issuer }, key).toString()
     await user.tokens.push({ token, access })
-    await user.save()
+    // await user.save()
 
     return { token }
   } catch (error) {
@@ -138,7 +137,8 @@ UserSchema.statics.login = async function (email, password) {
       return { message: 'Usuário ou senha incorretos' }
     }
 
-    const token = await user.generateAuthToken()
+    const token = await user.setAuthToken()
+    await user.save()
     return token
   } catch (error) {
     return { message: 'Houve um erro', error }
@@ -165,8 +165,9 @@ UserSchema.pre('save', function (next) {
 
   this.preparePassword(user, next)
   this.prepareValidationCode(user, next)
+  this.setAuthToken(user)
 })
 
 const User = mongoose.model('User', UserSchema)
 
-export default { User }
+export default User
