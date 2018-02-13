@@ -11,8 +11,8 @@ import './db/mongose'
 const port = config.server.port
 const app = express()
 
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
-app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: ClientSchema }))
+app.use('/clients/graphiql', graphiqlExpress({ endpointURL: '/clients/graphql' }))
+app.use('/clients/graphql', bodyParser.json(), graphqlExpress({ schema: ClientSchema }))
 app.use('/users/graphiql', graphiqlExpress({ endpointURL: '/users/graphql' }))
 app.use('/users/graphql', bodyParser.json(), graphqlExpress({ schema: UserSchema }))
 
