@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
 
-import defineAuthTokens from './../utils/token'
 import preparePassword from './../utils/password'
 
 const Schema = mongoose.Schema
@@ -23,15 +22,13 @@ const ClientSchema = new Schema({
     minlength: 6,
     required: true
   },
-  owns: [String],
-  tokens: [String]
+  owns: [String]
 })
 
 ClientSchema.pre('save', function (next) {
   const client = this
 
   preparePassword(client, 'code', next)
-  defineAuthTokens(client, client.name, client.owns)
 })
 
 const client = mongoose.model('clients', ClientSchema)

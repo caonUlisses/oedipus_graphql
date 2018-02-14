@@ -3,16 +3,15 @@ import config from './../config/master'
 
 const key = config.app.keys.models
 
-const defineAuthTokens = async (receiver = this, info, props, issuer = 'server') => {
+const signToken = async (receiver = this, info) => {
   try {
-    const expiration = Date.now() + 2000000000
-    const token = await jwt.sign({ _id: receiver._id.toHexString(), info, props, expiration, issuer }, key).toString()
-    await receiver.tokens.push(token)
+    const expiresIn = '30d'
+    const token = await jwt.sign({ _id: receiver._id.toHexString(), info }, key, { expiresIn }).toString()
 
-    return { token }
+    return token
   } catch (error) {
-    return { message: 'Houve um erro, tente novamente', error }
+    throw new Error({ message: 'Houve um erro, tente novamente', error })
   }
 }
 
-export default defineAuthTokens
+export default signToken
