@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import config from './../config/master'
 
+import defineAuthTokens from './../utils/token'
+
 const Schema = mongoose.Schema
 const key = config.app.keys.models
 
@@ -28,19 +30,6 @@ const ClientSchema = new Schema({
   tokens: [String]
 })
 
-ClientSchema.methods.setAuthTokens = async function (client = this, issuer = 'server') {
-  try {
-    const { name, owns } = client
-    const expiration = Date.now() + 2000000000
-    const token = await jwt.sign({ _id: client._id.toHexString(), name, owns, expiration, issuer }, key).toString()
-    await client.tokens.push(token)
-
-    return { token }
-  } catch (error) {
-    return { message: 'Houve um erro, tente novamente', error }
-  }
-}
-
 ClientSchema.methods.preparePassword = async function (client, next) {
   try {
     if (!client.isModified('code')) return next()
@@ -56,7 +45,7 @@ ClientSchema.pre('save', function (next) {
   const client = this
 
   this.preparePassword(client, next)
-  this.setAuthTokens(client)
+  defineAuthTokens(client, client.name, client.owns)
 })
 
 const client = mongoose.model('clients', ClientSchema)

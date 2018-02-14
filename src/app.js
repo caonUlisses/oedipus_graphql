@@ -1,5 +1,6 @@
 import {} from 'dotenv/config'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 import express from 'express'
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import chalk from 'chalk'
@@ -11,6 +12,7 @@ import './db/mongose'
 const port = config.server.port
 const app = express()
 
+app.use(cors())
 app.use('/clients/graphiql', graphiqlExpress({ endpointURL: '/clients/graphql' }))
 app.use('/clients/graphql', bodyParser.json(), graphqlExpress({ schema: ClientSchema }))
 app.use('/users/graphiql', graphiqlExpress({ endpointURL: '/users/graphql' }))

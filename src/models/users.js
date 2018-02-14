@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 import { pick } from 'lodash'
 import SHA256 from 'crypto-js/sha256'
 import validator from 'validator'
+import defineAuthTokens from './../utils/token'
 
 const key = config.app.keys.models
 
@@ -52,18 +53,7 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   },
-  tokens: [{
-    device: {
-      _id: {
-        type: String,
-        required: false
-      }
-    },
-    token: {
-      type: String,
-      required: true
-    }
-  }]
+  tokens: [String]
 })
 
 UserSchema.methods.toJSON = function () {
@@ -71,20 +61,6 @@ UserSchema.methods.toJSON = function () {
   const userObject = user.toObject()
 
   return pick(userObject, ['_id', 'name', 'email', 'picture', 'access'])
-}
-
-UserSchema.methods.setAuthToken = async function (user = this, issuer = 'force') {
-  try {
-    const { name, access } = user
-    const expiration = Date.now() + 2000000000
-    const token = await jwt.sign({ _id: user._id.toHexString(), access, expiration, name, issuer }, key).toString()
-    await user.tokens.push({ token, access })
-    // await user.save()
-
-    return { token }
-  } catch (error) {
-    return { message: 'Houve um erro gerando o token de login', error }
-  }
 }
 
 UserSchema.statics.findByToken = async function (token) {
@@ -165,7 +141,7 @@ UserSchema.pre('save', function (next) {
 
   this.preparePassword(user, next)
   this.prepareValidationCode(user, next)
-  this.setAuthToken(user)
+  defineAuthTokens(user, user.name, user.type)
 })
 
 const User = mongoose.model('User', UserSchema)
