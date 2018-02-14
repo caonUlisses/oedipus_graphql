@@ -40,19 +40,21 @@ const UserSchema = new mongoose.Schema({
   verified: {
     type: Boolean,
     required: true,
-    default: false
+    default: false,
+    select: false
   },
   validation_key: {
     type: String,
-    required: false
+    required: false,
+    select: false
   }
 })
 
-UserSchema.methods.login = async function (user, password) {
-  const valid = bcrypt.compare(password, user.password)
+UserSchema.methods.login = async function (password, user) {
+  const valid = await bcrypt.compare(password, user.password)
   if (!valid) throw new Error('Senha incorreta')
   const { _id, name, email, access } = user
-  return signToken(null, { _id, name, email, access })
+  return signToken({ _id, name, email, access })
 }
 
 UserSchema.pre('save', async function (next) {
