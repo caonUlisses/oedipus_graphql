@@ -10,15 +10,15 @@ const ClientResolver = {
     }
   },
   Mutation: {
-    addClient: (root, { name, cpf, cnpj, code, owns }) => {
+    create: (root, { name, cpf, cnpj, code, owns }) => {
       const author = new Client({name, cpf, cnpj, code, owns}).save()
       return author
     },
-    deleteClient: (root, { _id }) => {
-      return Client.remove({_id})
+    update: (root, { _id, name, cpf, cnpj, owns }) => {
+      return Client.findByIdAndUpdate(_id, {name, cpf, cnpj, owns})
     },
-    updateClient: (root, { _id, name }) => {
-      return Client.findOneAndUpdate({_id}, {name})
+    delete: (root, { _id }) => {
+      return Client.findByIdAndRemove(_id)
     }
   }
 }

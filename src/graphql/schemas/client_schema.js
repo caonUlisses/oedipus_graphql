@@ -16,9 +16,9 @@ const typeDefs = `
   }
 
   type Mutation {
-    addClient(name: String, cpf: String, cnpj: String, code: String, owns: [String]): Client
-    deleteClient(_id: String!): Client
-    updateClient(_id: String!, name: String!, owns: [String]): Client
+    create(name: String, cpf: String, cnpj: String, code: String, owns: [String]): Client
+    update(_id: String!, name: String!, owns: [String]): Client
+    delete(_id: String!): Client
   }
 `
 

@@ -12,6 +12,12 @@ const UserResolver = {
   Mutation: {
     create: (root, { name, email, password, picture, access }) => {
       return new User({name, email, password, picture, access}).save()
+    },
+    update: (root, { _id, name, email, picture, access }) => {
+      return User.findByIdAndUpdate(_id, { name, email, picture, access })
+    },
+    delete: (root, { _id }) => {
+      return User.findByIdAndRemove(_id)
     }
   }
 }
