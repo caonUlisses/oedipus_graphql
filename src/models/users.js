@@ -43,10 +43,6 @@ const UserSchema = new mongoose.Schema({
   validation_key: {
     type: String,
     required: false
-  },
-  active: {
-    type: Boolean,
-    default: true
   }
 })
 
