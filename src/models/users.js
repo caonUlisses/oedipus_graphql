@@ -6,6 +6,7 @@ import { pick } from 'lodash'
 import SHA256 from 'crypto-js/sha256'
 import validator from 'validator'
 import defineAuthTokens from './../utils/token'
+import preparePassword from './../utils/password'
 
 const key = config.app.keys.models
 
@@ -121,27 +122,11 @@ UserSchema.statics.login = async function (email, password) {
   }
 }
 
-UserSchema.methods.preparePassword = async function (user, next) {
-  try {
-    if (!user.isModified('password')) return next()
-
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(user.password, salt)
-    user.password = hash
-    return next()
-  } catch (error) { return next(error) }
-}
-
-UserSchema.methods.prepareValidationCode = function (user, next) {
-  user.validation_key = SHA256(user.email).toString()
-}
-
 UserSchema.pre('save', function (next) {
   const user = this
-
-  this.preparePassword(user, next)
-  this.prepareValidationCode(user, next)
+  preparePassword(user, next)
   defineAuthTokens(user, user.name, user.type)
+  user.validation_key = SHA256(user.email).toString()
 })
 
 const User = mongoose.model('User', UserSchema)
