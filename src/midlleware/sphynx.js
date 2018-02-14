@@ -3,13 +3,14 @@ import config from './../config/master'
 
 const key = config.app.keys.models
 
-const sphynx = async (req, res) => {
+const checkUser = async (req, res) => {
   const token = req.headers['authentication']
   try {
-    if (!token) { req.next() }
     if (token) {
       const user = await jwt.verify(token, key)
       req.user = user
+      req.next()
+    } else {
       req.next()
     }
   } catch (error) {
@@ -17,4 +18,19 @@ const sphynx = async (req, res) => {
   }
 }
 
-export default sphynx
+const checkClient = async (req, res) => {
+  const token = req.headers['client-authentication']
+  try {
+    if (token) {
+      const client = await jwt.verify(token, key)
+      req.client = client
+      req.next()
+    } else {
+      req.next()
+    }
+  } catch (error) {
+    req.next(error)
+  }
+}
+
+export { checkUser, checkClient }

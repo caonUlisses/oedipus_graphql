@@ -8,13 +8,14 @@ import config from './config/master'
 import ClientSchema from './graphql/schemas/client_schema'
 import UserSchema from './graphql/schemas/user_schema'
 import './db/mongose'
-import sphynx from './midlleware/sphynx'
+import { checkUser, checkClient } from './midlleware/sphynx'
 
 const port = config.server.port
 const app = express()
 
 app.use(cors())
-app.use(sphynx)
+app.use(checkUser)
+app.use(checkClient)
 
 app.use('/clients/graphiql', graphiqlExpress({ endpointURL: '/clients/graphql' }))
 app.use('/clients/graphql', bodyParser.json(), graphqlExpress({ schema: ClientSchema }))
