@@ -1,8 +1,10 @@
+import bcrypt from 'bcrypt'
 import config from './../config/master'
 import mongoose from 'mongoose'
 import SHA256 from 'crypto-js/sha256'
 import validator from 'validator'
 import preparePassword from './../utils/password'
+import signToken from './../utils/token'
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -46,13 +48,16 @@ const UserSchema = new mongoose.Schema({
   }
 })
 
-UserSchema.statics.login = async function (email, password) {
-  // login the user
+UserSchema.methods.login = async function (user, password) {
+  const valid = bcrypt.compare(password, user.password)
+  if (!valid) throw new Error('Senha incorreta')
+  const { _id, name, email, access } = user
+  return signToken(null, { _id, name, email, access })
 }
 
-UserSchema.pre('save', function (next) {
+UserSchema.pre('save', async function (next) {
   const user = this
-  preparePassword(user, next)
+  await preparePassword(user, 'password', next)
   user.validation_key = SHA256(user.email).toString()
 })
 

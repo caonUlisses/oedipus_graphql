@@ -18,6 +18,11 @@ const UserResolver = {
     },
     delete: async (root, { _id }) => {
       return User.findByIdAndRemove(_id)
+    },
+    login: async (root, { email, password }) => {
+      const user = await User.findOne({ email })
+      if (!user) throw new Error('Email não cadastrado')
+      return user.login(user, password)
     }
   }
 }

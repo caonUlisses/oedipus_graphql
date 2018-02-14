@@ -19,6 +19,7 @@ const typeDefs = `
     create(name: String, email: String, password: String, picture: String, access: String): User
     update(_id: String, name: String, email: String, picture: String, access: String): User
     delete(_id: String): User
+    login(email: String!, password: String!): String
   }
 `
 
