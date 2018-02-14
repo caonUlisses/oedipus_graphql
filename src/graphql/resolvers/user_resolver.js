@@ -3,11 +3,11 @@ import pick from 'lodash/pick'
 
 const UserResolver = {
   Query: {
-    users: async (root, {user}) => {
-      console.log(user)
+    users: async (root, args, { user }) => {
       return User.find({}, { password: 0 })
     },
-    user: async (root, { _id }) => {
+    user: async (root, { _id }, { user }) => {
+      if (!user) { throw new Error('Faça login primeiro') }
       return User.findById(_id, { password: 0 })
     }
   },

@@ -6,7 +6,7 @@ const key = config.app.keys.models
 const signToken = async (info) => {
   try {
     const expiresIn = '30d'
-    const token = await jwt.sign({ info }, key, { expiresIn }).toString()
+    const token = await jwt.sign(info, key, { expiresIn }).toString()
 
     return token
   } catch (error) {
