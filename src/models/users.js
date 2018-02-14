@@ -4,8 +4,6 @@ import SHA256 from 'crypto-js/sha256'
 import validator from 'validator'
 import preparePassword from './../utils/password'
 
-const key = config.app.keys.models
-
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
