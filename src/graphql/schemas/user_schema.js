@@ -5,7 +5,6 @@ const typeDefs = `
   type User {
     name: String
     email: String
-    password: String
     picture: String
     access: String
   }

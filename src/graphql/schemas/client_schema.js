@@ -6,7 +6,6 @@ const typeDefs = `
     name: String!,
     cpf: String,
     cnpj: String,
-    code: String!,
     owns: [String]
   }
 
