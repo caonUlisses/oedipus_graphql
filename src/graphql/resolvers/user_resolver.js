@@ -12,7 +12,7 @@ const UserResolver = {
     user: async (root, { _id }, { user }) => {
       if (!user) { throw new Error('Faça login primeiro') }
       try {
-        return User.findById(_id, { password: 0 })
+        return User.findById(_id)
       } catch (error) { throw new Error(error) }
     }
   },
