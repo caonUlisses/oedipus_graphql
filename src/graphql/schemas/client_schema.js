@@ -3,6 +3,7 @@ import ClientResolver from './../resolvers/client_resolver'
 
 const typeDefs = `
   type Client {
+    _id: String,
     name: String!,
     cpf: String,
     cnpj: String,
