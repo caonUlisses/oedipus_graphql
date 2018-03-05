@@ -2,23 +2,32 @@ import Client from './../../models/clients'
 
 const ClientResolver = {
   Query: {
-    clients: () => {
-      return Client.find({})
+    clients: async () => {
+      try {
+        return await Client.find({})
+      } catch (error) { throw new Error(error) }
     },
-    client: (root, { _id }) => {
-      return Client.findOne({_id})
+    client: async (root, { _id }) => {
+      try {
+        return await Client.findOne({_id})
+      } catch (error) { throw new Error(error) }
     }
   },
   Mutation: {
-    create: (root, { name, cpf, cnpj, code, owns }) => {
-      const author = new Client({name, cpf, cnpj, code, owns}).save()
-      return author
+    create: async (root, { name, cpf, cnpj, code, owns }) => {
+      try {
+        return await new Client({name, cpf, cnpj, code, owns}).save()
+      } catch (error) { throw new Error(error) }
     },
-    update: (root, { _id, name, cpf, cnpj, owns }) => {
-      return Client.findByIdAndUpdate(_id, {name, cpf, cnpj, owns})
+    update: async (root, { _id, name, cpf, cnpj, owns }) => {
+      try {
+        return await Client.findByIdAndUpdate(_id, {name, cpf, cnpj, owns})
+      } catch (error) { throw new Error(error) }
     },
-    delete: (root, { _id }) => {
-      return Client.findByIdAndRemove(_id)
+    delete: async (root, { _id }) => {
+      try {
+        return await Client.findByIdAndRemove(_id)
+      } catch (error) { throw new Error(error) }
     }
   }
 }
