@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import config from './../config/master'
+import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import SHA256 from 'crypto-js/sha256'
 import validator from 'validator'
@@ -55,6 +56,13 @@ UserSchema.methods.login = async function (password, user) {
   if (!valid) throw new Error('Senha incorreta')
   const { _id, name, email, access } = user
   return signToken({ _id, name, email, access })
+}
+
+UserSchema.statics.checkToken = async function token (token) {
+  if (!token) { throw new Error('Houve um problema localizando suas credenciais') }
+  try {
+    return await jwt.verify(token, config.app.keys.models)
+  } catch (error) { throw new Error(error) }
 }
 
 UserSchema.pre('save', async function (next) {

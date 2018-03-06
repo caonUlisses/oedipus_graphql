@@ -15,6 +15,12 @@ const UserResolver = {
       try {
         return User.findById(_id)
       } catch (error) { throw new Error(error) }
+    },
+    token: async (root, { token }) => {
+      if(!token) { throw new Error('Problemas na identificação do token') }
+      try {
+        return User.checkToken(token)
+      } catch (error) {throw new Error(error)}
     }
   },
   Mutation: {
