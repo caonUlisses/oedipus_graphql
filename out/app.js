@@ -45,10 +45,8 @@ app.use((0, _cors2.default)());
 app.use(_sphynx.checkUser);
 app.use(_sphynx.checkClient);
 
-app.use('/clients/graphiql', (0, _apolloServerExpress.graphiqlExpress)({ endpointURL: '/clients/graphql' }));
-app.use('/clients/graphql', _bodyParser2.default.json(), (0, _apolloServerExpress.graphqlExpress)({ schema: _client_schema2.default }));
-app.use('/users/graphiql', (0, _apolloServerExpress.graphiqlExpress)({ endpointURL: '/users/graphql' }));
-app.use('/users/graphql', _bodyParser2.default.json(), (0, _apolloServerExpress.graphqlExpress)(function (req) {
+app.use('/clients/', _bodyParser2.default.json(), (0, _apolloServerExpress.graphqlExpress)({ schema: _client_schema2.default }));
+app.use('/users/', _bodyParser2.default.json(), (0, _apolloServerExpress.graphqlExpress)(function (req) {
   return { schema: _user_schema2.default, context: { user: req.user } };
 }));
 

@@ -17,10 +17,8 @@ app.use(cors())
 app.use(checkUser)
 app.use(checkClient)
 
-app.use('/clients/graphiql', graphiqlExpress({ endpointURL: '/clients/graphql' }))
-app.use('/clients/graphql', bodyParser.json(), graphqlExpress({ schema: ClientSchema }))
-app.use('/users/graphiql', graphiqlExpress({ endpointURL: '/users/graphql' }))
-app.use('/users/graphql', bodyParser.json(), graphqlExpress(req => ({ schema: UserSchema, context: { user: req.user } })))
+app.use('/clients/', bodyParser.json(), graphqlExpress({ schema: ClientSchema }))
+app.use('/users/', bodyParser.json(), graphqlExpress(req => ({ schema: UserSchema, context: { user: req.user } })))
 
 app.listen(port, () => {
   console.log(chalk.green(`Live at port ${chalk.yellow(port)}`))
