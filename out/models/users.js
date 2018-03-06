@@ -20,6 +20,10 @@ var _master = require('./../config/master');
 
 var _master2 = _interopRequireDefault(_master);
 
+var _jsonwebtoken = require('jsonwebtoken');
+
+var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
 var _mongoose = require('mongoose');
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
@@ -124,15 +128,56 @@ UserSchema.methods.login = function () {
   };
 }();
 
-UserSchema.pre('save', function () {
-  var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(next) {
-    var user;
+UserSchema.statics.checkToken = function () {
+  var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(token) {
     return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
+            if (token) {
+              _context2.next = 2;
+              break;
+            }
+
+            throw new Error('Houve um problema localizando suas credenciais');
+
+          case 2:
+            _context2.prev = 2;
+            _context2.next = 5;
+            return _jsonwebtoken2.default.verify(token, _master2.default.app.keys.models);
+
+          case 5:
+            return _context2.abrupt('return', _context2.sent);
+
+          case 8:
+            _context2.prev = 8;
+            _context2.t0 = _context2['catch'](2);
+            throw new Error(_context2.t0);
+
+          case 11:
+          case 'end':
+            return _context2.stop();
+        }
+      }
+    }, _callee2, this, [[2, 8]]);
+  }));
+
+  function token(_x3) {
+    return _ref2.apply(this, arguments);
+  }
+
+  return token;
+}();
+
+UserSchema.pre('save', function () {
+  var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(next) {
+    var user;
+    return _regenerator2.default.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
             user = this;
-            _context2.next = 3;
+            _context3.next = 3;
             return (0, _password2.default)(user, 'password', next);
 
           case 3:
@@ -140,14 +185,14 @@ UserSchema.pre('save', function () {
 
           case 4:
           case 'end':
-            return _context2.stop();
+            return _context3.stop();
         }
       }
-    }, _callee2, this);
+    }, _callee3, this);
   }));
 
-  return function (_x3) {
-    return _ref2.apply(this, arguments);
+  return function (_x4) {
+    return _ref3.apply(this, arguments);
   };
 }());
 

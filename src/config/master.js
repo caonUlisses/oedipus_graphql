@@ -1,16 +1,4 @@
-/**
- * This is the main configuration file
- * If you don't want to use process.env to manage configs,
- * simply edit this file.
- *
- * You can remove the 'process.env.key' and set your own value
- * or leave it and use it as it is
- */
-
 export default {
-  /**
-   * Application configuration
-   */
   app: {
     name: process.env.APP_NAME || 'Oedipus',
     keys: {
@@ -18,9 +6,6 @@ export default {
       models: process.env.MODELS_KEY || 'bd0b342b23d17a52b4ff91e5f9683f0495f80c0b89b247e64892734025ddfb21'
     }
   },
-  /**
-   * Server related configuration
-   */
   server: {
     files: {
       path: process.env.FILE_PATH || './../../files'
@@ -30,9 +15,6 @@ export default {
       uri: process.env.DB_URI || 'mongodb://localhost:27017/oedipus'
     }
   },
-  /**
-   * Model related configuration
-   */
   models: {
     users: {
       access: process.env.USER_DEFAULT_ACCESS || 'user'

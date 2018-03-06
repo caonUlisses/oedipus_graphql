@@ -184,20 +184,28 @@ var UserResolver = {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                _context5.prev = 0;
+                if (user) {
+                  _context5.next = 2;
+                  break;
+                }
+
+                throw new Error('Faça login primeiro');
+
+              case 2:
+                _context5.prev = 2;
                 return _context5.abrupt('return', _users2.default.findByIdAndRemove(user._id));
 
-              case 4:
-                _context5.prev = 4;
-                _context5.t0 = _context5['catch'](0);
+              case 6:
+                _context5.prev = 6;
+                _context5.t0 = _context5['catch'](2);
                 throw new Error(_context5.t0);
 
-              case 7:
+              case 9:
               case 'end':
                 return _context5.stop();
             }
           }
-        }, _callee5, undefined, [[0, 4]]);
+        }, _callee5, undefined, [[2, 6]]);
       }));
 
       return function _delete(_x12, _x13, _x14) {
