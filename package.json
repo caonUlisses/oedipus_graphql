@@ -4,7 +4,7 @@
   "main": "oedipus.js",
   "license": "MIT",
   "scripts": {
-    "build": "babel src --out-dir app",
+    "build": "babel src --out-dir out",
     "watch": "babel-watch src/app.js",
     "test": "mocha src/test/"
   },

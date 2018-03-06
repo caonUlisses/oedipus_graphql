@@ -1,13 +1,14 @@
 import User from './../../models/users'
+import chalk from 'chalk'
 import pick from 'lodash/pick'
 
 const UserResolver = {
   Query: {
     users: async (root, args, { user }) => {
-      if (!user) { throw new Error('Faça login primeiro') }
+      if (!user) { throw new Error(chalk.red('Faça login primeiro')) }
       try {
         return User.find({}, { password: 0 })
-      } catch (error) { throw new Error(error) }
+      } catch (error) { throw new Error(chalk.red(error)) }
     },
     user: async (root, { _id }, { user }) => {
       if (!user) { throw new Error('Faça login primeiro') }
