@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+const bcrypt = require('bcrypt')
 
 const preparePassword = async (actor, field, next) => {
   try {
@@ -10,4 +10,4 @@ const preparePassword = async (actor, field, next) => {
   } catch (error) { return next(error) }
 }
 
-export default preparePassword
+module.exports = preparePassword

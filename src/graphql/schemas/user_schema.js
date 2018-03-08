@@ -1,5 +1,5 @@
-import { makeExecutableSchema } from 'graphql-tools'
-import UserResolver from './../resolvers/user_resolver'
+const { makeExecutableSchema } = require('graphql-tools')
+const UserResolver = require('./../resolvers/user_resolver')
 
 const typeDefs = `
   type User {
@@ -25,4 +25,4 @@ const typeDefs = `
 
 const schema = makeExecutableSchema({ typeDefs, resolvers: UserResolver })
 
-export default schema
+module.exports = schema

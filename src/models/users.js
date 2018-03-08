@@ -1,11 +1,11 @@
-import bcrypt from 'bcrypt'
-import config from './../config/master'
-import jwt from 'jsonwebtoken'
-import mongoose from 'mongoose'
-import SHA256 from 'crypto-js/sha256'
-import validator from 'validator'
-import preparePassword from './../utils/password'
-import signToken from './../utils/token'
+const bcrypt = require('bcrypt')
+const config = require('./../config/master')
+const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose')
+const SHA256 = require('crypto-js/sha256')
+const validator = require('validator')
+const preparePassword = require('./../utils/password')
+const signToken = require('./../utils/token')
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -73,4 +73,4 @@ UserSchema.pre('save', async function (next) {
 
 const User = mongoose.model('User', UserSchema)
 
-export default User
+module.exports = User

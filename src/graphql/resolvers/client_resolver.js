@@ -1,4 +1,4 @@
-import Client from './../../models/clients'
+const Client = require('./../../models/clients')
 
 const ClientResolver = {
   Query: {
@@ -32,4 +32,4 @@ const ClientResolver = {
   }
 }
 
-export default ClientResolver
+module.exports = ClientResolver 

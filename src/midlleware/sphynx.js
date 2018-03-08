@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken'
-import config from './../config/master'
+const jwt = require('jsonwebtoken')
+const config = require('./../config/master')
 
 const key = config.app.keys.models
 
@@ -33,4 +33,4 @@ const checkClient = async (req, res) => {
   }
 }
 
-export { checkUser, checkClient }
+module.exports = { checkUser, checkClient }

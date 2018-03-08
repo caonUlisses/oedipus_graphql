@@ -1,6 +1,6 @@
-import User from './../../models/users'
-import chalk from 'chalk'
-import pick from 'lodash/pick'
+const User = require('./../../models/users')
+const chalk = require('chalk')
+const pick = require('lodash/pick')
 
 const UserResolver = {
   Query: {
@@ -46,4 +46,4 @@ const UserResolver = {
   }
 }
 
-export default UserResolver
+module.exports = UserResolver

@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken'
-import config from './../config/master'
+const jwt = require('jsonwebtoken')
+const config = require('./../config/master')
 
 const key = config.app.keys.models
 
@@ -14,4 +14,4 @@ const signToken = async (info) => {
   }
 }
 
-export default signToken
+module.exports = signToken

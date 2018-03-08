@@ -1,6 +1,5 @@
-import mongoose from 'mongoose'
-
-import preparePassword from './../utils/password'
+const mongoose = require('mongoose')
+const preparePassword = require('./../utils/password')
 
 const Schema = mongoose.Schema
 
@@ -33,4 +32,4 @@ ClientSchema.pre('save', function (next) {
 
 const client = mongoose.model('clients', ClientSchema)
 
-export default client
+module.exports = client

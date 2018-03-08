@@ -1,7 +1,7 @@
-import mongoose from 'mongoose'
-import chalk from 'chalk'
-import config from './../config/master'
+const mongoose = require('mongoose')
+const chalk = require('chalk')
+const config = require('./../config/master')
 
-export default mongoose.connect(config.server.db.uri, () => {
+module.exports = mongoose.connect(config.server.db.uri, () => {
   console.log(chalk.green('Connected to MongoDB'))
 })

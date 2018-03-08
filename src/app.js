@@ -1,14 +1,14 @@
-import {} from 'dotenv/config'
-import bodyParser from 'body-parser'
-import cors from 'cors'
-import express from 'express'
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
-import chalk from 'chalk'
-import config from './config/master'
-import ClientSchema from './graphql/schemas/client_schema'
-import UserSchema from './graphql/schemas/user_schema'
-import './db/mongose'
-import { checkUser, checkClient } from './midlleware/sphynx'
+require('dotenv').config()
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const express = require('express')
+const { graphqlExpress } = require('apollo-server-express')
+const chalk = require('chalk')
+const config = require('./config/master')
+const ClientSchema = require('./graphql/schemas/client_schema')
+const UserSchema = require('./graphql/schemas/user_schema')
+require('./db/mongose.js')
+const { checkUser, checkClient } = require('./midlleware/sphynx')
 
 const port = config.server.port
 const app = express()

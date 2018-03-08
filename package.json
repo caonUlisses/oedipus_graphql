@@ -4,8 +4,8 @@
   "main": "oedipus.js",
   "license": "MIT",
   "scripts": {
-    "build": "babel src --out-dir out",
-    "watch": "babel-watch src/app.js",
+    "watch": "nodemon src/app.js",
+    "debug": "node --inspect src/app.js",
     "test": "mocha src/test/"
   },
   "dependencies": {
@@ -37,6 +37,11 @@
     "babel-register": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "babel-watch": "^2.0.7",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
     "sinon": "^4.3.0"
   }
 }
