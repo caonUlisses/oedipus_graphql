@@ -1,9 +1,10 @@
+// @flow
 const bcrypt = require('bcrypt')
 const config = require('./../config/master')
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 const SHA256 = require('crypto-js/sha256')
-const validator = require('validator')
+const { isEmail } = require('validator')
 const preparePassword = require('./../utils/password')
 const signToken = require('./../utils/token')
 
@@ -19,10 +20,7 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     minlength: 1,
     unique: true,
-    validate: {
-      validator: validator.isEmail,
-      message: `{VALUE} is not a valid email`
-    }
+    validate: [isEmail, 'Email inválido']
   },
   password: {
     type: String,
@@ -51,14 +49,14 @@ const UserSchema = new mongoose.Schema({
   }
 })
 
-UserSchema.methods.login = async function (password, user) {
-  const valid = await bcrypt.compare(password, user.password)
+UserSchema.methods.login = async function (password: string, user) {
+  const valid: boolean = await bcrypt.compare(password, user.password)
   if (!valid) throw new Error('Senha incorreta')
   const { _id, name, email, access } = user
   return signToken({ _id, name, email, access })
 }
 
-UserSchema.statics.checkToken = async function token (token) {
+UserSchema.statics.checkToken = async function token(token: string) {
   if (!token) { throw new Error('Houve um problema localizando suas credenciais') }
   try {
     return await jwt.verify(token, config.app.keys.models)

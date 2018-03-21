@@ -1,14 +1,15 @@
+// @flow
 const jwt = require('jsonwebtoken')
 const config = require('./../config/master')
 
 const key = config.app.keys.models
 
-const checkUser = async (req, res) => {
-  const token = req.headers['authentication']
+const checkUser = async (req) => {
+  const token: string = req.headers['authentication']
   try {
     if (token) {
-      const user = await jwt.verify(token, key)
-      req.user = user
+      const userToken: string = await jwt.verify(token, key)
+      req.user_token = userToken
       req.next()
     } else {
       req.next()
@@ -18,12 +19,12 @@ const checkUser = async (req, res) => {
   }
 }
 
-const checkClient = async (req, res) => {
-  const token = req.headers['client-authentication']
+const checkClient = async (req) => {
+  const token: string = req.headers['client-authentication']
   try {
     if (token) {
-      const client = await jwt.verify(token, key)
-      req.client = client
+      const clientToken: string = await jwt.verify(token, key)
+      req.client_token = clientToken
       req.next()
     } else {
       req.next()
